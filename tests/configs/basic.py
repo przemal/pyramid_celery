@@ -1,1 +1,1 @@
-BROKER_URL = "redis://localhost:1337/0"
+broker_url = "redis://localhost:1337/0"

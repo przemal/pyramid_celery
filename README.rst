@@ -44,7 +44,7 @@ or decorator based:
     def add(x, y):
         print x+y
 
-To get pyramid settings you may access them in ``app.conf['PYRAMID_REGISTRY']``.
+To get pyramid settings you may access them in ``app.conf['pyramid_registry']``.
 
 Configuration
 =====================
@@ -58,12 +58,12 @@ used to configure the app you can do the following:
     config.configure_celery(global_config['__file__'])
 
 If you want to use the standard **celeryconfig** python file you can set the
-**USE_CELERYCONFIG = True** like this:
+**use_celeryconfig = True** like this:
 
 .. code-block:: ini
 
     [celery]
-    USE_CELERYCONFIG = True
+    use_celeryconfig = True
 
 You can get more information for celeryconfig.py here:
 
@@ -74,9 +74,9 @@ An example ini configuration looks like this:
 .. code-block:: ini
 
     [celery]
-    BROKER_URL = redis://localhost:1337/0
-    CELERY_IMPORTS = app1.tasks
-                     app2.tasks
+    broker_url = redis://localhost:1337/0
+    imports = app1.tasks
+              app2.tasks
 
     [celerybeat:task1]
     task = app1.tasks.Task1
@@ -123,7 +123,7 @@ Example configuration for this:
 
 A gotcha you want to watchout for is that the date/time in scheduled tasks
 is UTC by default.  If you want to schedule for an exact date/time for your
-local timezone you need to set ``CELERY_TIMEZONE``.  Documentation for that
+local timezone you need to set ``timezone``.  Documentation for that
 can be found here:
 
 http://celery.readthedocs.org/en/latest/userguide/periodic-tasks.html#time-zones
@@ -225,7 +225,7 @@ You most likely want to add a logging section to your ini for celery as well:
 and then update your ``[loggers]`` section to include it.
 
 If you want use the default celery loggers then you can set
-**CELERYD_HIJACK_ROOT_LOGGER=True** in the [celery] section of your .ini.
+**worker_hijack_root_logger=True** in the [celery] section of your .ini.
 
 Celery worker processes do not propagade exceptions inside tasks, but swallow them 
 silently by default. This is related to the behavior of reading asynchronous 
@@ -244,7 +244,7 @@ task results back. To see if your tasks fail you might need to configure
     propagate = 1
 
 If you want use the default celery loggers then you can set
-**CELERYD_HIJACK_ROOT_LOGGER=True** in the [celery] section of your .ini
+**worker_hijack_root_logger=True** in the [celery] section of your .ini
 
 Demo
 =====================

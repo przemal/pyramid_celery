@@ -98,9 +98,9 @@ class INILoader(celery.loaders.base.BaseLoader):
         config_dict = {}
 
         for key, value in self.parser.items('celery'):
-            config_dict[key.upper()] = value
+            config_dict[key] = value
 
-        list_settings = ['CELERY_IMPORTS', 'CELERY_ACCEPT_CONTENT']
+        list_settings = ['imports', 'accept_content']
 
         for setting in list_settings:
             if setting in config_dict:
@@ -119,9 +119,9 @@ class INILoader(celery.loaders.base.BaseLoader):
                 route_config[name] = get_route_config(self.parser, section)
 
         if beat_config:
-            config_dict['CELERYBEAT_SCHEDULE'] = beat_config
+            config_dict['beat_schedule'] = beat_config
 
         if route_config:
-            config_dict['CELERY_ROUTES'] = route_config
+            config_dict['task_routes'] = route_config
 
         return config_dict

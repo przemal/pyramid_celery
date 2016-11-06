@@ -29,16 +29,16 @@ def setup_app(registry, ini_location):
     loader = INILoader(celery_app, ini_file=ini_location)
     celery_config = loader.read_configuration()
 
-    if asbool(celery_config.get('USE_CELERYCONFIG', False)) is True:
+    if asbool(celery_config.get('use_celeryconfig', False)) is True:
         config_path = 'celeryconfig'
         celery_app.config_from_object(config_path)
     else:
         # TODO: Couldn't find a way with celery to do this
         hijack_logger = asbool(
-            celery_config.get('CELERYD_HIJACK_ROOT_LOGGER', False)
+            celery_config.get('worker_hijack_root_logger', False)
         )
 
-        celery_config['CELERYD_HIJACK_ROOT_LOGGER'] = hijack_logger
+        celery_config['worker_hijack_root_logger'] = hijack_logger
 
         if hijack_logger is False:
             global ini_file
@@ -47,7 +47,7 @@ def setup_app(registry, ini_location):
 
         celery_app.config_from_object(celery_config)
 
-    celery_app.conf.update({'PYRAMID_REGISTRY': registry})
+    celery_app.conf.update({'pyramid_registry': registry})
 
 
 @signals.user_preload_options.connect
