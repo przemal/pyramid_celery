@@ -29,6 +29,9 @@ def setup_app(registry, ini_location):
     loader = INILoader(celery_app, ini_file=ini_location)
     celery_config = loader.read_configuration()
 
+    if celery_config.get('task_queue_max_priority'):
+        celery_config['task_queue_max_priority'] = int(celery_config['task_queue_max_priority'])
+
     if asbool(celery_config.get('use_celeryconfig', False)) is True:
         config_path = 'celeryconfig'
         celery_app.config_from_object(config_path)
